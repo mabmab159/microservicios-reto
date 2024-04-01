@@ -1,0 +1,10 @@
+services:
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: miguel
+      MONGO_INITDB_ROOT_PASSWORD: miguel
+      MONGO_INITDB_DATABASE: miguel
+    ports:
+      - 27017:27017
