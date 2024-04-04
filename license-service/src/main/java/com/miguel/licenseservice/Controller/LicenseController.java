@@ -1,12 +1,12 @@
-package com.miguel.licenseservice;
+package com.miguel.licenseservice.Controller;
 
 import com.miguel.licenseservice.Model.License;
 import com.miguel.licenseservice.Services.LicenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/license")
@@ -16,12 +16,12 @@ public class LicenseController {
     private final LicenseService licenseService;
 
     @GetMapping
-    public ResponseEntity<List<License>> findAll() {
-        return ResponseEntity.ok(licenseService.findAll());
+    public Mono<ResponseEntity<Flux<License>>> findAll() {
+        return Mono.just(ResponseEntity.ok(licenseService.findAll()));
     }
 
     @PostMapping
-    public ResponseEntity<License> save(@RequestBody License license) {
-        return ResponseEntity.ok(licenseService.save(license));
+    public Mono<ResponseEntity<License>> save(@RequestBody License license) {
+        return licenseService.save(license).map(ResponseEntity::ok);
     }
 }
