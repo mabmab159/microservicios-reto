@@ -2,6 +2,8 @@ package com.miguel.licenseservice.Controller;
 
 import com.miguel.licenseservice.Model.License;
 import com.miguel.licenseservice.Services.LicenseService;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
