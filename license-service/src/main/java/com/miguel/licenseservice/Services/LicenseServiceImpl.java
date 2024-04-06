@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class LicenseServiceImpl implements LicenseService {
@@ -17,6 +15,11 @@ public class LicenseServiceImpl implements LicenseService {
     @Override
     public Mono<License> save(License license) {
         return licenseRepository.save(license);
+    }
+
+    @Override
+    public Mono<License> findById(String id) {
+        return licenseRepository.findById(id);
     }
 
     @Override
