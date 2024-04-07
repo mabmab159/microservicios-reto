@@ -12,6 +12,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
 
 @RestController
 @RequestMapping("/license")
@@ -54,7 +55,7 @@ public class LicenseController {
     @Scheduled(cron = "0 0 0 * * ?")
     public void updateLicenses() {
         Flux<License> licenses = licenseService.findAll();
-        licenses.filter(p -> p.getFecha_caducidad().before(new Date()) || TimeUnit.MILLISECONDS.toDays(p.getFecha_caducidad().getTime() - new Date().getTime()) > 30)
+        licenses.filter(expiredAndErroneousLicenses)
                 .map(license -> {
                     license.setActivo(false);
                     return license;
@@ -62,4 +63,8 @@ public class LicenseController {
                 .flatMap(licenseService::save)
                 .subscribe();
     }
+
+    //Metodos de soporte
+    Predicate<License> expiredAndErroneousLicenses = p -> p.getFecha_caducidad().before(new Date()) ||
+            TimeUnit.MILLISECONDS.toDays(p.getFecha_caducidad().getTime() - new Date().getTime()) > 30;
 }
