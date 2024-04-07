@@ -2,21 +2,21 @@ package com.miguel.licenseservice.Controller;
 
 import com.miguel.licenseservice.Model.License;
 import com.miguel.licenseservice.Services.LicenseService;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.QueryParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.sql.SQLOutput;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/license")
 @RequiredArgsConstructor
+@EnableScheduling
 public class LicenseController {
 
     private final LicenseService licenseService;
@@ -51,20 +51,15 @@ public class LicenseController {
         return licenseService.save(license).map(ResponseEntity::ok);
     }
 
-    @Scheduled(fixedRate = 300000)
-    @GetMapping("/test")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void updateLicenses() {
-        System.out.println("Scheduled");
-        System.out.println(new Date());
         Flux<License> licenses = licenseService.findAll();
-        //licenses = licenses.filter(p -> p.getFecha_caducidad().before(new Date()));
-        licenses.map(p ->
-                {
-                    System.out.println(p.getFecha_caducidad());
-                   // p.setActivo(false);
-                   // return licenseService.save(p);
-                    return null;
-                }
-        );
+        licenses.filter(p -> p.getFecha_caducidad().before(new Date()) || TimeUnit.MILLISECONDS.toDays(p.getFecha_caducidad().getTime() - new Date().getTime()) > 30)
+                .map(license -> {
+                    license.setActivo(false);
+                    return license;
+                })
+                .flatMap(licenseService::save)
+                .subscribe();
     }
 }
