@@ -2,6 +2,7 @@ package com.miguel.cloudgateway.Service;
 
 import com.miguel.cloudgateway.Feign.LicenseFeign;
 import com.miguel.cloudgateway.Model.License;
+import com.miguel.cloudgateway.Utils.Filtros;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +19,18 @@ public class LicenseService {
 
     public List<License> getAll() {
         return licenseFeign.getAll();
+    }
+
+    public List<License> findFilter(String tipo, String id, String validez) {
+        return licenseFeign.findFilter(
+                Filtros.builder()
+                        .tipo(tipo)
+                        .id(id)
+                        .validez(validez)
+                        .build());
+    }
+
+    public License findById(String id) {
+        return licenseFeign.findById(id);
     }
 }

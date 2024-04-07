@@ -28,7 +28,9 @@ public class LicenseController {
     }
 
     @GetMapping("/filter")
-    public Mono<ResponseEntity<Flux<License>>> findFilter(@RequestParam String tipo, @RequestParam String id, @RequestParam String validez) {
+    public Mono<ResponseEntity<Flux<License>>> findFilter(@RequestParam(required = false, defaultValue = "") String tipo,
+                                                          @RequestParam(required = false, defaultValue = "") String id,
+                                                          @RequestParam(required = false, defaultValue = "") String validez) {
         Flux<License> licenses = licenseService.findAll();
         if (!tipo.isEmpty()) {
             licenses = licenses.filter(p -> p.getCategoria().name().equals(tipo));
@@ -42,8 +44,8 @@ public class LicenseController {
         return Mono.just(ResponseEntity.ok(licenses));
     }
 
-    @GetMapping("/validate")
-    public Mono<ResponseEntity<Mono<License>>> findById(@RequestBody String id) {
+    @GetMapping("/validate/{id}")
+    public Mono<ResponseEntity<Mono<License>>> findById(@PathVariable String id) {
         return Mono.just(ResponseEntity.ok(licenseService.findById(id)));
     }
 

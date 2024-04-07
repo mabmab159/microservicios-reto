@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/license")
+@RequestMapping("/api/license")
 @RequiredArgsConstructor
 public class LicenseController {
     private final LicenseService licenseService;
@@ -22,6 +22,16 @@ public class LicenseController {
     @GetMapping(produces = "application/json")
     public ResponseEntity<List<License>> getAll() {
         return ResponseEntity.ok(licenseService.getAll());
+    }
+
+    @GetMapping(value = "/filter", produces = "application/json")
+    public ResponseEntity<List<License>> findFilter(@RequestParam String tipo, @RequestParam String id, @RequestParam String validez) {
+        return ResponseEntity.ok(licenseService.findFilter(tipo, id, validez));
+    }
+
+    @GetMapping(value = "/validate/{id}", produces = "application/json")
+    public ResponseEntity<License> findFilter(@PathVariable String id) {
+        return ResponseEntity.ok(licenseService.findById(id));
     }
 }
 
