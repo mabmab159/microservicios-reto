@@ -16,7 +16,7 @@ public class LicenseController {
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<License> saveLicense(@RequestBody License license) {
-        return (ResponseEntity.ok(licenseService.save(license)));
+        return ResponseEntity.ok(licenseService.save(license));
     }
 
     @GetMapping(produces = "application/json")
@@ -32,6 +32,11 @@ public class LicenseController {
     @GetMapping(value = "/validate/{id}", produces = "application/json")
     public ResponseEntity<License> findFilter(@PathVariable String id) {
         return ResponseEntity.ok(licenseService.findById(id));
+    }
+
+    @PatchMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity<License> updateLicense(@RequestBody License license) {
+        return ResponseEntity.ok(licenseService.updateLicense(license));
     }
 }
 

@@ -2,11 +2,13 @@ package com.miguel.licenseservice.Controller;
 
 import com.miguel.licenseservice.Model.License;
 import com.miguel.licenseservice.Services.LicenseService;
+import com.miguel.licenseservice.Utils.Categoria;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -45,8 +47,8 @@ public class LicenseController {
     }
 
     @GetMapping("/validate/{id}")
-    public Mono<ResponseEntity<Mono<License>>> findById(@PathVariable String id) {
-        return Mono.just(ResponseEntity.ok(licenseService.findById(id)));
+    public Mono<ResponseEntity<License>> findById(@PathVariable String id) {
+        return licenseService.findById(id).map(ResponseEntity::ok);
     }
 
     @PostMapping
@@ -64,6 +66,25 @@ public class LicenseController {
                 })
                 .flatMap(licenseService::save)
                 .subscribe();
+    }
+
+    @PostMapping("/update")
+    public Mono<ResponseEntity<License>> updateLicense(@RequestBody License license) {
+        return licenseService.findById(license.getId())
+                .flatMap(p -> {
+                    License licenseUpdate = License.builder()
+                            .id(license.getId())
+                            .DNI(license.getDNI() == null ? p.getDNI() : license.getDNI())
+                            .nombres(license.getNombres() == null ? p.getNombres() : license.getNombres())
+                            .apellidos(license.getApellidos() == null ? p.getApellidos() : license.getApellidos())
+                            .categoria(license.getCategoria() == null ? p.getCategoria() : license.getCategoria())
+                            .fecha_emision(license.getFecha_emision() == null ? p.getFecha_emision() : license.getFecha_emision())
+                            .fecha_caducidad(license.getFecha_caducidad() == null ? p.getFecha_caducidad() : license.getFecha_caducidad())
+                            .activo(license.getActivo() == null ? p.getActivo() : license.getActivo())
+                            .build();
+                    return licenseService.save(licenseUpdate).map(ResponseEntity::ok);
+                })
+                .switchIfEmpty(licenseService.save(license).map(ResponseEntity::ok));
     }
 
     //Metodos de soporte

@@ -33,4 +33,8 @@ public class LicenseService {
     public License findById(String id) {
         return licenseFeign.findById(id);
     }
+
+    public License updateLicense(License license){
+        return licenseFeign.updateLicense(license);
+    }
 }
