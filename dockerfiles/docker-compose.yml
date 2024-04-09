@@ -25,18 +25,6 @@ services:
     networks:
       - miguel
 
-  postgres:
-    image: postgres:13.1-alpine
-    container_name: postgresql
-    ports:
-      - 5432:5432
-    environment:
-      POSTGRES_USER: miguel
-      POSTGRES_PASSWORD: miguel
-      POSTGRES_DB: miguel
-    networks:
-      - miguel
-
   zipkin:
     image: ghcr.io/openzipkin/zipkin-slim
     container_name: zipkin
