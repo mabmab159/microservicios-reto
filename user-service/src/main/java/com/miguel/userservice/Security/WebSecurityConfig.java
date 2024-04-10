@@ -16,7 +16,6 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     private final AuthenticationManager authenticationManager;
-    private final SecurityContextRepository securityContextRepository;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -30,7 +29,6 @@ public class WebSecurityConfig {
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .httpBasic(Customizer.withDefaults())
                 .authenticationManager(authenticationManager)
-                //.securityContextRepository(securityContextRepository)
                 .build();
     }
 }
