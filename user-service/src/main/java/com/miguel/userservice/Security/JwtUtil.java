@@ -30,7 +30,6 @@ public class JwtUtil implements Serializable {
         final Date createdDate = new Date();
         final Date expirationDate = new Date(createdDate.getTime() + expirationTimeLong * 1000);
         SecretKey key = Keys.hmacShaKeyFor(this.secret.getBytes());
-        System.out.println(key.toString());
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username)

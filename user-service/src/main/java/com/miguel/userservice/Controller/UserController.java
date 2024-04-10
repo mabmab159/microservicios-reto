@@ -10,16 +10,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import java.util.Date;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
     private final JwtUtil jwtUtil;
@@ -49,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping("/validate")
-    public Mono<ResponseEntity<Boolean>> validate() {
-        return Mono.just(true).map(ResponseEntity::ok);
+    public Mono<ResponseEntity<Boolean>> validate(@RequestHeader(value = "Authorization") String token) {
+        return Mono.just(jwtUtil.validateToken(token.substring(6))).map(ResponseEntity::ok);
     }
 }

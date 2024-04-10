@@ -18,7 +18,6 @@ import java.util.List;
 public class User implements UserDetails {
     private String username;
     private String password;
-    private Boolean enabled;
     private List<String> roles;
 
     @Override

@@ -28,11 +28,12 @@ public class WebSecurityConfig {
         return http.authorizeExchange(auth -> {
                     auth.pathMatchers("/actuator/**").permitAll();
                     auth.pathMatchers("/login/create", "/login/auth").permitAll();
-                    auth.anyExchange().authenticated();
+                    auth.anyExchange().permitAll();
                 })
                 .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .httpBasic(Customizer.withDefaults())
+                .authenticationManager(authenticationManager)
                 .securityContextRepository(securityContextRepository)
                 .build();
     }

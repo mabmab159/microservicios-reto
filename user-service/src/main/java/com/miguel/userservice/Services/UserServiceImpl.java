@@ -20,7 +20,6 @@ public class UserServiceImpl implements UserService {
                         new com.miguel.userservice.Security.User(
                                 u.getUsername(),
                                 u.getPassword(),
-                                true,
                                 u.getRoles()
                         )
                 )
