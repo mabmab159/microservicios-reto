@@ -25,16 +25,12 @@ public class WebSecurityConfig {
 
     @Bean
     SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity http) {
-        return http.authorizeExchange(auth -> {
-                    auth.pathMatchers("/actuator/**").permitAll();
-                    auth.pathMatchers("/login/create", "/login/auth").permitAll();
-                    auth.anyExchange().permitAll();
-                })
+        return http.authorizeExchange(auth -> auth.anyExchange().permitAll())
                 .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .httpBasic(Customizer.withDefaults())
                 .authenticationManager(authenticationManager)
-                .securityContextRepository(securityContextRepository)
+                //.securityContextRepository(securityContextRepository)
                 .build();
     }
 }
