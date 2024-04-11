@@ -13,31 +13,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public Mono<com.miguel.userservice.Security.User> findByUsername(String username) {
-        Mono<User> user = userRepository.findOneByUsername(username);
-        return user.flatMap(u ->
-                Mono.just(
-                        new com.miguel.userservice.Security.User(
-                                u.getUsername(),
-                                u.getPassword(),
-                                u.getRoles()
-                        )
-                )
-        );
-    }
-
-    @Override
     public Mono<User> create(User user) {
         return userRepository.save(user);
-    }
-
-    @Override
-    public Mono<String> login() {
-        return null;
-    }
-
-    @Override
-    public Mono<Boolean> validate() {
-        return null;
     }
 }
