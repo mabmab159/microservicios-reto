@@ -1,6 +1,7 @@
 package com.miguel.cloudgateway.Service;
 
 import com.miguel.cloudgateway.Feign.UserFeign;
+import com.miguel.cloudgateway.Feign.UserQueryFeign;
 import com.miguel.cloudgateway.Model.AuthRequest;
 import com.miguel.cloudgateway.Model.User;
 import com.miguel.cloudgateway.Model.ValidateResponse;
@@ -11,9 +12,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
     private final UserFeign userFeign;
+    private final UserQueryFeign userQueryFeign;
 
     public ValidateResponse validateToken(String token) {
-        return userFeign.validateToken(token);
+        return userQueryFeign.validateToken(token);
     }
 
     public User createUser(User user) {
@@ -21,6 +23,6 @@ public class UserService {
     }
 
     public Object login(AuthRequest authRequest) {
-        return userFeign.login(authRequest);
+        return userQueryFeign.login(authRequest);
     }
 }
