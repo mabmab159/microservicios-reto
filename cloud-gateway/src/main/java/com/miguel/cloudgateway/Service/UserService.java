@@ -3,6 +3,7 @@ package com.miguel.cloudgateway.Service;
 import com.miguel.cloudgateway.Feign.UserFeign;
 import com.miguel.cloudgateway.Model.AuthRequest;
 import com.miguel.cloudgateway.Model.User;
+import com.miguel.cloudgateway.Model.ValidateResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserFeign userFeign;
 
-    public Boolean validateToken(String token) {
+    public ValidateResponse validateToken(String token) {
         return userFeign.validateToken(token);
     }
 

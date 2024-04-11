@@ -3,6 +3,7 @@ package com.miguel.userservice.Security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -13,9 +14,10 @@ import java.util.Map;
 
 @Component
 public class JwtUtil implements Serializable {
-
-    private String secret = "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcxMzU5NTI4NCwiaWF0IjoxNzEyNjQ0ODg0fQ.V10yZPGXdRGrNfpB0Q2nbVUkMuIkpaCDheSdHDmv2CQ";
-    private String expirationTime = "3600";
+    @Value("${jwt.secret}")
+    private String secret;
+    @Value("${jwt.expiration}")
+    private String expirationTime;
 
     public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();

@@ -3,6 +3,7 @@ package com.miguel.cloudgateway.Controller;
 import com.miguel.cloudgateway.Model.AuthRequest;
 import com.miguel.cloudgateway.Model.ErrorLogin;
 import com.miguel.cloudgateway.Model.User;
+import com.miguel.cloudgateway.Model.ValidateResponse;
 import com.miguel.cloudgateway.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("/validate")
-    public ResponseEntity<Boolean> validateToken(@RequestHeader(value = "Authorization") String token) {
+    public ResponseEntity<ValidateResponse> validateToken(@RequestHeader(value = "Authorization") String token) {
         return ResponseEntity.ok(userService.validateToken(token));
     }
 }

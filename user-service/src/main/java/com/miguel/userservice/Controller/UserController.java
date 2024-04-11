@@ -1,6 +1,7 @@
 package com.miguel.userservice.Controller;
 
 import com.miguel.userservice.Model.User;
+import com.miguel.userservice.Model.ValidateResponse;
 import com.miguel.userservice.Security.AuthRequest;
 import com.miguel.userservice.Security.AuthResponse;
 import com.miguel.userservice.Security.ErrorLogin;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+import java.util.Arrays;
 import java.util.Date;
 
 @RestController
@@ -33,7 +35,6 @@ public class UserController {
                     } else {
                         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                                 .body(new ErrorLogin("Bad Credentials", new Date()));
-
                     }
                 })
                 .defaultIfEmpty(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
@@ -46,7 +47,18 @@ public class UserController {
     }
 
     @PostMapping("/validate")
-    public Mono<ResponseEntity<Boolean>> validate(@RequestHeader(value = "Authorization") String token) {
-        return Mono.just(jwtUtil.validateToken(token.substring(6))).map(ResponseEntity::ok);
+    public Mono<ResponseEntity<ValidateResponse>> validate(@RequestHeader(value = "Authorization") String token) {
+        token = token.substring(6);
+        return Mono.just(
+                ValidateResponse.builder()
+                        .success(jwtUtil.validateToken(token))
+                        .roles(Arrays.stream(jwtUtil.getAllClaimsFromToken(token)
+                                .get("roles")
+                                .toString()
+                                .replaceAll("[\\[\\]\"]", "")
+                                .split(", ")
+                        ).toList())
+                        .build()
+        ).map(ResponseEntity::ok);
     }
 }
