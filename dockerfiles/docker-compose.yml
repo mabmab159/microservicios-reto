@@ -25,6 +25,32 @@ services:
     networks:
       - miguel
 
+  mongo-query:
+    image: mongo
+    restart: always
+    container_name: mongo-query
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: miguel
+      MONGO_INITDB_ROOT_PASSWORD: miguel
+      MONGO_INITDB_DATABASE: miguel
+    ports:
+      - 27018:27017
+    networks:
+      - miguel
+
+  mongo-express-query:
+    image: mongo-express
+    restart: always
+    container_name: mongo-express-query
+    ports:
+      - 8082:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: miguel
+      ME_CONFIG_MONGODB_ADMINPASSWORD: miguel
+      ME_CONFIG_MONGODB_URL: mongodb://miguel:miguel@mongo-query:27017/
+    networks:
+      - miguel
+
   zipkin:
     image: ghcr.io/openzipkin/zipkin-slim
     container_name: zipkin
@@ -65,6 +91,35 @@ services:
     container_name: loki
     ports:
       - 3100:3100
+    networks:
+      - miguel
+
+  zoopeker:
+    image: confluentinc/cp-zookeeper
+    container_name: kafka-zookeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 2181:2181
+    networks:
+      - miguel
+
+  broker:
+    image: confluentinc/cp-kafka
+    container_name: kafka-broker
+    ports:
+      - 9092:9092
+    depends_on:
+      - zoopeker
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 192.168.1.123:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT, PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092, PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_REPLICATION_FACTOR: 1
     networks:
       - miguel
 

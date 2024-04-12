@@ -2,6 +2,7 @@ package com.miguel.licenseservice.Services;
 
 import com.miguel.licenseservice.Model.License;
 import com.miguel.licenseservice.Repositories.LicenseRepository;
+import com.miguel.licenseservice.Utils.KafkaUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -11,9 +12,11 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class LicenseServiceImpl implements LicenseService {
     private final LicenseRepository licenseRepository;
+    private final KafkaUtil kafkaUtil;
 
     @Override
     public Mono<License> save(License license) {
+        kafkaUtil.sendMessage(license);
         return licenseRepository.save(license);
     }
 
