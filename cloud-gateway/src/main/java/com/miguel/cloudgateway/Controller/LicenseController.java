@@ -25,7 +25,8 @@ public class LicenseController {
     }
 
     @GetMapping(value = "/filter")
-    public ResponseEntity<List<License>> findFilter(@RequestParam String tipo, @RequestParam String id, @RequestParam String validez) {
+    public ResponseEntity<List<License>> findFilter(@RequestParam String tipo, @RequestParam String id,
+                                                    @RequestParam String validez) {
         return ResponseEntity.ok(licenseService.findFilter(tipo, id, validez));
     }
 
