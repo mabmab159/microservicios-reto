@@ -1,6 +1,5 @@
 package com.miguel.userservicequery.Controller;
 
-import com.miguel.userservicequery.Model.User;
 import com.miguel.userservicequery.Model.ValidateResponse;
 import com.miguel.userservicequery.Security.AuthRequest;
 import com.miguel.userservicequery.Security.AuthResponse;

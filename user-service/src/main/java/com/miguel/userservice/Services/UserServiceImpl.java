@@ -2,6 +2,7 @@ package com.miguel.userservice.Services;
 
 import com.miguel.userservice.Model.User;
 import com.miguel.userservice.Repositories.UserRepository;
+import com.miguel.userservice.Utils.KafkaUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -11,9 +12,13 @@ import reactor.core.publisher.Mono;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final KafkaUtil kafkaUtil;
 
     @Override
-    public Mono<User> create(User user) {
-        return userRepository.save(user);
+    public Mono<User> save(User user) {
+        return userRepository.save(user).map(p -> {
+            kafkaUtil.sendMessage(p);
+            return p;
+        });
     }
 }

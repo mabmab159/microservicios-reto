@@ -5,27 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e0ebe43-d4ce-4bbc-82b6-199087e2ee48" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/user-service-query/src/main/java/com/miguel/userservicequery/Config/KafkaConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service-query/src/main/java/com/miguel/userservicequery/Config/ZipkinConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/miguel/userservice/Config/KafkaConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/miguel/userservice/Config/ZipkinConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/miguel/userservice/Utils/KafkaUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/microservicios-reto.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/client-service.main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/cloud-gateway.main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/license-service-query.main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/license-service.main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/user-service-query.main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/user-service.main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dockerfiles/grafana/grafana.db" beforeDir="false" afterPath="$PROJECT_DIR$/dockerfiles/grafana/grafana.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/license-service/src/main/java/com/miguel/licenseservice/Services/LicenseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/license-service/src/main/java/com/miguel/licenseservice/Services/LicenseServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/license-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/license-service/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service-query/src/main/java/com/miguel/userservicequery/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service-query/src/main/java/com/miguel/userservicequery/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/miguel/userservice/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/miguel/userservice/Controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/miguel/userservice/Services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/miguel/userservice/Services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/miguel/userservice/Services/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/miguel/userservice/Services/UserServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,9 +50,28 @@
         <task path="$PROJECT_DIR$/license-service">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/user-service-query">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="user-service-query" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="user-service-query" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="user-service-query" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -112,6 +117,7 @@
     &quot;Gradle.Build user-service-query.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Build user-service.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.license-service [bootJar].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.user-service-query [clean].executor&quot;: &quot;Run&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
     &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
@@ -155,7 +161,29 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.UserServiceApplication">
+  <component name="RunManager" selected="Spring Boot.UserServiceQueryApplication">
+    <configuration name="user-service-query [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/user-service-query" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="ClientServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="client-service.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.miguel.clientservice.ClientServiceApplication" />
@@ -169,15 +197,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CloudGatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="cloud-gateway.main" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.miguel.cloudgateway.CloudGatewayApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.miguel.cloudgateway.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+    <configuration name="LicenseServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="license-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.miguel.licenseservice.LicenseServiceApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -222,19 +244,20 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Gradle.user-service-query [clean]" />
+      <item itemvalue="Spring Boot.LicenseServiceApplication" />
       <item itemvalue="Spring Boot.UserServiceApplication" />
       <item itemvalue="Spring Boot.ClientServiceApplication" />
-      <item itemvalue="Spring Boot.CloudGatewayApplication" />
       <item itemvalue="Spring Boot.LicenseServiceQueryApplication" />
       <item itemvalue="Spring Boot.UserServiceQueryApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.UserServiceQueryApplication" />
+        <item itemvalue="Gradle.user-service-query [clean]" />
         <item itemvalue="Spring Boot.UserServiceApplication" />
         <item itemvalue="Spring Boot.LicenseServiceQueryApplication" />
-        <item itemvalue="Spring Boot.UserServiceQueryApplication" />
         <item itemvalue="Spring Boot.ClientServiceApplication" />
-        <item itemvalue="Spring Boot.CloudGatewayApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -257,7 +280,7 @@
       <workItem from="1713072676952" duration="4499000" />
       <workItem from="1713079839753" duration="1444000" />
       <workItem from="1713083723790" duration="889000" />
-      <workItem from="1713109306321" duration="3599000" />
+      <workItem from="1713109306321" duration="5637000" />
     </task>
     <servers />
   </component>

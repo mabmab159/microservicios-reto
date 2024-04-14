@@ -4,7 +4,6 @@ import com.miguel.licenseservice.Model.License;
 import com.miguel.licenseservice.Repositories.LicenseRepository;
 import com.miguel.licenseservice.Utils.KafkaUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

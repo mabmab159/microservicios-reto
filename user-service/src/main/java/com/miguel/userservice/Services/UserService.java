@@ -4,5 +4,5 @@ import com.miguel.userservice.Model.User;
 import reactor.core.publisher.Mono;
 
 public interface UserService {
-    Mono<User> create(User user);
+    Mono<User> save(User user);
 }
