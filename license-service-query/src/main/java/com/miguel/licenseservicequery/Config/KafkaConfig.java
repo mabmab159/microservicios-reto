@@ -38,7 +38,8 @@ public class KafkaConfig {
         kafkaProperties.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, JsonDeserializer.class);
         kafkaProperties.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class.getName());
         kafkaProperties.put(JsonDeserializer.KEY_DEFAULT_TYPE, "com.miguel.licenseservicequery.Config.KafkaConfig");
-        kafkaProperties.put(JsonDeserializer.VALUE_DEFAULT_TYPE, "com.miguel.licenseservicequery.Config.KafkaConfig");
+        kafkaProperties.put(JsonDeserializer.VALUE_DEFAULT_TYPE, "com.miguel.licenseservicequery.Model.License");
+        kafkaProperties.put(JsonDeserializer.USE_TYPE_INFO_HEADERS, false);
         kafkaProperties.put(JsonDeserializer.TRUSTED_PACKAGES, "com.miguel.*");
         return new DefaultKafkaConsumerFactory<>(kafkaProperties);
     }
@@ -52,11 +53,6 @@ public class KafkaConfig {
 
     @KafkaListener(topics = "miguel-topic")
     public void listenTopic(License obj) {
-        System.out.println("Este es mi objeto: " + obj.toString());
-        obj.setId("asdasd");
-        License license2 = new License();
-        license2.setId("Prueba");
-        licenseRepository.save(license2);
-        licenseRepository.save(obj);
+        licenseRepository.save(obj).subscribe();
     }
 }
