@@ -1,16 +1,17 @@
 package com.miguel.licenseservice.Model;
 
 import com.miguel.licenseservice.Utils.Categoria;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Builder
-@Getter
-@Setter
+@Document(collection = "license")
 public class License {
     @Id
     private String id;

@@ -51,6 +51,32 @@ services:
     networks:
       - miguel
 
+  mongo-audit:
+    image: mongo
+    restart: always
+    container_name: mongo-audit
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: miguel
+      MONGO_INITDB_ROOT_PASSWORD: miguel
+      MONGO_INITDB_DATABASE: miguel
+    ports:
+      - 27019:27017
+    networks:
+      - miguel
+
+  mongo-express-audit:
+    image: mongo-express
+    restart: always
+    container_name: mongo-express-audit
+    ports:
+      - 8083:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: miguel
+      ME_CONFIG_MONGODB_ADMINPASSWORD: miguel
+      ME_CONFIG_MONGODB_URL: mongodb://miguel:miguel@mongo-audit:27017/
+    networks:
+      - miguel
+
   zipkin:
     image: ghcr.io/openzipkin/zipkin-slim
     container_name: zipkin
