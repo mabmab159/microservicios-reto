@@ -19,12 +19,10 @@ public class KafkaUtil {
     private String topicName2;
 
     public void sendMessage(License obj) {
-        System.out.println("Hacemos el envio de la licencia");
         kafkaTemplate.send(topicName, obj);
     }
 
     public void sendMessageAudit(Audit obj) {
-        System.out.println("Hacemos el envio de la auditoria");
         kafkaTemplateAudit.send(topicName2, obj);
     }
 }

@@ -1,18 +1,20 @@
 package com.miguel.licenseservicequery.Config;
 
+import com.miguel.licenseservicequery.Model.Audit;
 import com.miguel.licenseservicequery.Model.License;
 import com.miguel.licenseservicequery.Repositories.LicenseRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
-import org.springframework.kafka.core.ConsumerFactory;
-import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.core.*;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,7 +56,19 @@ public class KafkaConfig {
 
     @KafkaListener(topics = "miguel-topic")
     public void listenTopic(License obj) {
-        System.out.println("llegamos al topic de license-service-query");
         licenseRepository.save(obj).subscribe();
+    }
+
+    public ProducerFactory<String, Audit> producerFactory() {
+        Map<String, Object> kafkaProperties = new HashMap<>();
+        kafkaProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaServer + ":" + kafkaPort);
+        kafkaProperties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        kafkaProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        return new DefaultKafkaProducerFactory<>(kafkaProperties);
+    }
+
+    @Bean
+    public KafkaTemplate<String, Audit> kafkaTemplateAudit() {
+        return new KafkaTemplate<>(producerFactory());
     }
 }
