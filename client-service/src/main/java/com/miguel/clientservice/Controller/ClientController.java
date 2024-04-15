@@ -13,16 +13,10 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class ClientController {
     private final ClientService clientService;
-    private final ClientServiceImpl clientServiceImpl;
 
     @PostMapping
     public Mono<ResponseEntity<Client>> saveClient(@RequestBody Client client) {
         return clientService.save(client).map(ResponseEntity::ok);
-    }
-
-    @GetMapping("/{id}")
-    public Mono<ResponseEntity<Client>> findById(@RequestParam String id) {
-        return clientService.findById(id).map(ResponseEntity::ok);
     }
 
     @PostMapping("/id")
@@ -38,7 +32,5 @@ public class ClientController {
                     return clientService.save(clientUpdate).map(ResponseEntity::ok);
                 })
                 .switchIfEmpty(clientService.save(client).map(ResponseEntity::ok));
-
     }
-
 }
