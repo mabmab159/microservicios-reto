@@ -1,151 +1,152 @@
 services:
-  mongo:
-    image: mongo
-    restart: always
-    container_name: miguel-mongo
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: miguel
-      MONGO_INITDB_ROOT_PASSWORD: miguel
-      MONGO_INITDB_DATABASE: miguel
-    ports:
-      - 27017:27017
-    networks:
-      - miguel
-
-  mongo-express:
-    image: mongo-express
-    restart: always
-    container_name: miguel-mongo-express
-    ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: miguel
-      ME_CONFIG_MONGODB_ADMINPASSWORD: miguel
-      ME_CONFIG_MONGODB_URL: mongodb://miguel:miguel@mongo:27017/
-    networks:
-      - miguel
-
-  mongo-query:
-    image: mongo
-    restart: always
-    container_name: miguel-mongo-query
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: miguel
-      MONGO_INITDB_ROOT_PASSWORD: miguel
-      MONGO_INITDB_DATABASE: miguel
-    ports:
-      - 27018:27017
-    networks:
-      - miguel
-
-  mongo-express-query:
-    image: mongo-express
-    restart: always
-    container_name: miguel-mongo-express-query
-    ports:
-      - 8082:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: miguel
-      ME_CONFIG_MONGODB_ADMINPASSWORD: miguel
-      ME_CONFIG_MONGODB_URL: mongodb://miguel:miguel@mongo-query:27017/
-    networks:
-      - miguel
-
-  mongo-audit:
-    image: mongo
-    restart: always
-    container_name: miguel-mongo-audit
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: miguel
-      MONGO_INITDB_ROOT_PASSWORD: miguel
-      MONGO_INITDB_DATABASE: miguel
-    ports:
-      - 27019:27017
-    networks:
-      - miguel
-
-  mongo-express-audit:
-    image: mongo-express
-    restart: always
-    container_name: miguel-mongo-express-audit
-    ports:
-      - 8083:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: miguel
-      ME_CONFIG_MONGODB_ADMINPASSWORD: miguel
-      ME_CONFIG_MONGODB_URL: mongodb://miguel:miguel@mongo-audit:27017/
-    networks:
-      - miguel
-
-  zipkin:
-    image: ghcr.io/openzipkin/zipkin-slim
-    container_name: miguel-zipkin
-    environment:
-      - STORAGE_TYPE=mem
-    ports:
-      - 9411:9411
-    networks:
-      - miguel
-
-  prometheus:
-    image: prom/prometheus
-    container_name: miguel-prometheus
-    ports:
-      - 9090:9090
-    volumes:
-      - ./prometheus/config/:/etc/prometheus/
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-    networks:
-      - miguel
-
-  grafana:
-    image: grafana/grafana-oss
-    container_name: miguel-grafana
-    ports:
-      - 3000:3000
-    volumes:
-      - ./grafana/:/var/lib/grafana
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-      - GF_SERVER_DOMAIN=localhost
-    networks:
-      - miguel
-
-  loki:
-    image: grafana/loki
-    container_name: miguel-loki
-    ports:
-      - 3100:3100
-    networks:
-      - miguel
-
-  zookeeper:
-    image: confluentinc/cp-zookeeper
-    container_name: miguel-kafka-zookeeper
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-    networks:
-      - miguel
-
-  broker:
-    image: confluentinc/cp-kafka
-    container_name: miguel-kafka-broker
-    ports:
-      - 9092:9092
-    depends_on:
-      - zookeeper
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT, PLAINTEXT_INTERNAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092, PLAINTEXT_INTERNAL://broker:29092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_REPLICATION_FACTOR: 1
-    networks:
-      - miguel
+#  mongo:
+#    image: mongo
+#    restart: always
+#    container_name: miguel-mongo
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: miguel
+#      MONGO_INITDB_ROOT_PASSWORD: miguel
+#      MONGO_INITDB_DATABASE: miguel
+#    ports:
+#      - 27017:27017
+#    networks:
+#      - miguel
+#
+#  mongo-express:
+#    image: mongo-express
+#    restart: always
+#    container_name: miguel-mongo-express
+#    ports:
+#      - 8081:8081
+#    environment:
+#      ME_CONFIG_MONGODB_ADMINUSERNAME: miguel
+#      ME_CONFIG_MONGODB_ADMINPASSWORD: miguel
+#      ME_CONFIG_MONGODB_URL: mongodb://miguel:miguel@mongo:27017/
+#    networks:
+#      - miguel
+#
+#  mongo-query:
+#    image: mongo
+#    restart: always
+#    container_name: miguel-mongo-query
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: miguel
+#      MONGO_INITDB_ROOT_PASSWORD: miguel
+#      MONGO_INITDB_DATABASE: miguel
+#    ports:
+#      - 27018:27017
+#    networks:
+#      - miguel
+#
+#  mongo-express-query:
+#    image: mongo-express
+#    restart: always
+#    container_name: miguel-mongo-express-query
+#    ports:
+#      - 8082:8081
+#    environment:
+#      ME_CONFIG_MONGODB_ADMINUSERNAME: miguel
+#      ME_CONFIG_MONGODB_ADMINPASSWORD: miguel
+#      ME_CONFIG_MONGODB_URL: mongodb://miguel:miguel@mongo-query:27017/
+#    networks:
+#      - miguel
+#
+#  mongo-audit:
+#    image: mongo
+#    restart: always
+#    container_name: miguel-mongo-audit
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: miguel
+#      MONGO_INITDB_ROOT_PASSWORD: miguel
+#      MONGO_INITDB_DATABASE: miguel
+#    ports:
+#      - 27019:27017
+#    networks:
+#      - miguel
+#
+#  mongo-express-audit:
+#    image: mongo-express
+#    restart: always
+#    container_name: miguel-mongo-express-audit
+#    ports:
+#      - 8083:8081
+#    environment:
+#      ME_CONFIG_MONGODB_ADMINUSERNAME: miguel
+#      ME_CONFIG_MONGODB_ADMINPASSWORD: miguel
+#      ME_CONFIG_MONGODB_URL: mongodb://miguel:miguel@mongo-audit:27017/
+#    networks:
+#      - miguel
+#
+#  zipkin:
+#    image: ghcr.io/openzipkin/zipkin-slim
+#    container_name: miguel-zipkin
+#    environment:
+#      - STORAGE_TYPE=mem
+#    ports:
+#      - 9411:9411
+#    networks:
+#      - miguel
+#
+#  prometheus:
+#    image: prom/prometheus
+#    container_name: miguel-prometheus
+#    ports:
+#      - 9090:9090
+#    volumes:
+#      - ./prometheus/config/:/etc/prometheus/
+#    command:
+#      - '--config.file=/etc/prometheus/prometheus.yml'
+#    networks:
+#      - miguel
+#
+#  grafana:
+#    image: grafana/grafana-oss
+#    container_name: miguel-grafana
+#    ports:
+#      - 3000:3000
+#    volumes:
+#      - ./grafana/:/var/lib/grafana
+#    environment:
+#      - GF_SECURITY_ADMIN_PASSWORD=admin
+#      - GF_SERVER_DOMAIN=localhost
+#    networks:
+#      - miguel
+#
+#  loki:
+#    image: grafana/loki
+#    container_name: miguel-loki
+#    ports:
+#      - 3100:3100
+#    networks:
+#      - miguel
+#
+#  zookeeper:
+#    image: confluentinc/cp-zookeeper
+#    container_name: miguel-kafka-zookeeper
+#    environment:
+#      ZOOKEEPER_CLIENT_PORT: 2181
+#      ZOOKEEPER_TICK_TIME: 2000
+#    networks:
+#      - miguel
+#
+#  broker:
+#    image: confluentinc/cp-kafka
+#    container_name: miguel-kafka-broker
+#    ports:
+#      - 9092:9092
+#    depends_on:
+#      - zookeeper
+#    environment:
+#      KAFKA_BROKER_ID: 1
+#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT, PLAINTEXT_INTERNAL:PLAINTEXT
+#      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092, PLAINTEXT_INTERNAL://broker:29092
+#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+#      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+#      KAFKA_TRANSACTION_STATE_LOG_MIN_REPLICATION_FACTOR: 1
+#    networks:
+#      - miguel
+#
 
   eureka-server:
     build: ../eurekaServer
@@ -161,13 +162,13 @@ services:
     build: ../config-service
     container_name: miguel-config-service
     healthcheck:
-      test: ["CMD", "curl", "http://localhost:9000/cloud-gateway/dev"]
+      test: ["CMD", "curl", "http://config-service:9000/cloud-gateway/dev"]
     depends_on:
       eureka-server:
         condition: service_healthy
     environment:
       CUSTOM.SERVER.PORT: 9000
-      EUREKA.SERVER.HOSTNAME: http//eureka-server:8761/eureka
+      EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
     networks:
       - miguel
 
@@ -183,41 +184,43 @@ services:
         condition: service_healthy
     environment:
       CUSTOM.SERVER.PORT: 9040
-      EUREKA.SERVER.HOSTNAME: http//eureka-server:8761/eureka
+      EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
+      EUREKA.CONFIG.SERVER: http://config-service:9000
     networks:
       - miguel
 
-  client-service:
-    build: ../client-service
-    container_name: miguel-client-service
-    healthcheck:
-      test: [ "CMD", "curl", "http://localhost:9010/" ]
-    depends_on:
-      eureka-server:
-        condition: service_healthy
-      config-service:
-        condition: service_healthy
-    environment:
-      CUSTOM.SERVER.PORT: 9010
-      EUREKA.SERVER.HOSTNAME: http//eureka-server:8761/eureka
-    networks:
-      - miguel
-
-  client-service-query:
-    build: ../audit-service
-    container_name: miguel-client-service-query
-    healthcheck:
-      test: [ "CMD", "curl", "http://localhost:9015/" ]
-    depends_on:
-      eureka-server:
-        condition: service_healthy
-      config-service:
-        condition: service_healthy
-    environment:
-      CUSTOM.SERVER.PORT: 9015
-      EUREKA.SERVER.HOSTNAME: http//eureka-server:8761/eureka
-    networks:
-      - miguel
+#
+#  client-service:
+#    build: ../client-service
+#    container_name: miguel-client-service
+#    healthcheck:
+#      test: [ "CMD", "curl", "http://localhost:9010/" ]
+#    depends_on:
+#      eureka-server:
+#        condition: service_healthy
+#      config-service:
+#        condition: service_healthy
+#    environment:
+#      CUSTOM.SERVER.PORT: 9010
+#      EUREKA.SERVER.HOSTNAME: http//eureka-server:8761/eureka
+#    networks:
+#      - miguel
+#
+#  client-service-query:
+#    build: ../audit-service
+#    container_name: miguel-client-service-query
+#    healthcheck:
+#      test: [ "CMD", "curl", "http://localhost:9015/" ]
+#    depends_on:
+#      eureka-server:
+#        condition: service_healthy
+#      config-service:
+#        condition: service_healthy
+#    environment:
+#      CUSTOM.SERVER.PORT: 9015
+#      EUREKA.SERVER.HOSTNAME: http//eureka-server:8761/eureka
+#    networks:
+#      - miguel
 
 networks:
   miguel:
