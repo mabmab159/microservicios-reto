@@ -1,6 +1,8 @@
 package com.miguel.licenseservice.Controller;
 
+import com.miguel.licenseservice.Model.Client;
 import com.miguel.licenseservice.Model.License;
+import com.miguel.licenseservice.Services.ClientService;
 import com.miguel.licenseservice.Services.LicenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +26,12 @@ import java.util.function.Predicate;
 public class LicenseController {
 
     private final LicenseService licenseService;
+    private final ClientService clientService;
 
     @PostMapping
     public Mono<ResponseEntity<License>> save(@RequestBody License license) {
+        Client client = clientService.getClient(license.getClient().getDNI());
+        license.setClient(client);
         return licenseService.save(license).map(ResponseEntity::ok);
     }
 
@@ -44,13 +49,15 @@ public class LicenseController {
 
     @PostMapping("/update")
     public Mono<ResponseEntity<License>> updateLicense(@RequestBody License license) {
+        Client client = clientService.getClient(license.getClient().getDNI());
+        if (client == null) {
+            return Mono.just(ResponseEntity.notFound().build());
+        }
         return licenseService.findById(license.getId())
                 .flatMap(p -> {
                     License licenseUpdate = License.builder()
                             .id(license.getId())
-                            .DNI(license.getDNI() == null ? p.getDNI() : license.getDNI())
-                            .nombres(license.getNombres() == null ? p.getNombres() : license.getNombres())
-                            .apellidos(license.getApellidos() == null ? p.getApellidos() : license.getApellidos())
+                            .client(client)
                             .categoria(license.getCategoria() == null ? p.getCategoria() : license.getCategoria())
                             .fecha_emision(license.getFecha_emision() == null ? p.getFecha_emision() : license.getFecha_emision())
                             .fecha_caducidad(license.getFecha_caducidad() == null ? p.getFecha_caducidad() : license.getFecha_caducidad())

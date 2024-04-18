@@ -36,6 +36,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.5.0'
     implementation 'io.micrometer:micrometer-observation:1.12.2'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'io.micrometer:micrometer-tracing-bridge-brave:1.2.2'
     implementation 'io.zipkin.reporter2:zipkin-reporter-brave:2.16.3'
     implementation 'io.micrometer:micrometer-registry-prometheus:1.12.2'

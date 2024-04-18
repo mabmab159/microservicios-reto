@@ -2,10 +2,12 @@ package com.miguel.clientservice.Controller;
 
 import com.miguel.clientservice.Model.Client;
 import com.miguel.clientservice.Service.ClientService;
-import com.miguel.clientservice.Service.ClientServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -19,7 +21,7 @@ public class ClientController {
         return clientService.save(client).map(ResponseEntity::ok);
     }
 
-    @PostMapping("/id")
+    @PostMapping("/update")
     public Mono<ResponseEntity<Client>> updateClient(@RequestBody Client client) {
         return clientService.findById(client.getDNI())
                 .flatMap(p -> {

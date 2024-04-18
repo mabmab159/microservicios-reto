@@ -17,9 +17,7 @@ import java.util.Date;
 public class License {
     @Id
     private String id;
-    private String DNI;
-    private String nombres;
-    private String apellidos;
+    private Client client;
     private Categoria categoria;
     private Date fecha_emision;
     private Date fecha_caducidad;

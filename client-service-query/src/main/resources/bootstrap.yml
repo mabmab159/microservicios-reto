@@ -3,6 +3,6 @@ spring:
     name: client-service-query
   cloud:
     config:
-      uri: http://localhost:9000
+      uri: ${EUREKA.CONFIG.SERVER:http://localhost:9000}
       profile: dev
       enabled: true
