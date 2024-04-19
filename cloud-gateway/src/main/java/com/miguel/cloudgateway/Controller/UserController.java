@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
@@ -29,8 +30,13 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<User> create(@RequestBody User user) {
-        return ResponseEntity.ok(userService.createUser(user));
+    public ResponseEntity<User> create(@RequestBody User user, @RequestHeader(value = "Authorization") String token) {
+        ValidateResponse validateResponse = userService.validateToken(token);
+        List<String> roles = validateResponse.getRoles();
+        if (roles.contains("POST") && validateResponse.getSuccess()) {
+            return ResponseEntity.ok(userService.createUser(user));
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @PostMapping("/validate")

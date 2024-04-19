@@ -56,6 +56,7 @@ public class KafkaConfig {
 
     @KafkaListener(topics = "miguel-topic")
     public void listenTopic(Client obj) {
+        System.out.println("Miguel - topic - kafka client service");
         clientRepository.save(obj).subscribe();
     }
 

@@ -12,9 +12,10 @@ import java.util.Date;
 @NoArgsConstructor
 public class License {
     private String id;
-    private String DNI;
+    private String dni;
     private String nombres;
     private String apellidos;
+    private Date fechaNacimiento;
     private Categoria categoria;
     private Date fecha_emision;
     private Date fecha_caducidad;

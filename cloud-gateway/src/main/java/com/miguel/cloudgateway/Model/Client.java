@@ -10,7 +10,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Client {
-    private String DNI;
+    private String id;
+    private String dni;
     private String nombres;
     private String apellidos;
     private Date fechaNacimiento;

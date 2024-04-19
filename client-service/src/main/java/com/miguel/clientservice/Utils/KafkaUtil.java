@@ -14,6 +14,7 @@ public class KafkaUtil {
     private String topicName;
 
     public void sendMessage(Client obj) {
+        System.out.println("llegamos al envio");
         kafkaTemplate.send(topicName, obj);
     }
 }

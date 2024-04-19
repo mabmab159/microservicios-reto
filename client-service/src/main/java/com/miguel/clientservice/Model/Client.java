@@ -12,7 +12,8 @@ import java.util.Date;
 @Document(collection = "client")
 public class Client {
     @Id
-    private String DNI;
+    private String id;
+    private String dni;
     private String nombres;
     private String apellidos;
     private Date fechaNacimiento;

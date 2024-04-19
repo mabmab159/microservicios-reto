@@ -23,10 +23,11 @@ public class ClientController {
 
     @PostMapping("/update")
     public Mono<ResponseEntity<Client>> updateClient(@RequestBody Client client) {
-        return clientService.findById(client.getDNI())
+        return clientService.findById(client.getId())
                 .flatMap(p -> {
                     Client clientUpdate = Client.builder()
-                            .DNI(client.getDNI())
+                            .id(client.getId())
+                            .dni(client.getDni() == null ? p.getDni() : client.getDni())
                             .nombres(client.getNombres() == null ? p.getNombres() : client.getNombres())
                             .apellidos(client.getApellidos() == null ? p.getApellidos() : client.getApellidos())
                             .fechaNacimiento(client.getFechaNacimiento() == null ? p.getFechaNacimiento() : client.getFechaNacimiento())
