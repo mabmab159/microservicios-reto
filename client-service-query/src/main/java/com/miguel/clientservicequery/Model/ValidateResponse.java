@@ -1,4 +1,4 @@
-package com.miguel.cloudgateway.Model;
+package com.miguel.clientservicequery.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

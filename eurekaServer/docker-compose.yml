@@ -140,11 +140,10 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT, PLAINTEXT_INTERNAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092, PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://172.20.0.1:9092, PLAINTEXT_INTERNAL://broker:29092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_REPLICATION_FACTOR: 1
-    #command: bash -c "kafka-topics --create --bootstrap-server localhost:9092 --replication-factor 1 partitions 1 --topic miguel-topic && kafka-topics --create --bootstrap-server localhost:9092 --replication-factor 1 partitions 1 --topic miguel-topic-2"
     networks:
       - miguel
 
@@ -152,7 +151,7 @@ services:
     build: ../eurekaServer
     container_name: miguel-eureka-server
     healthcheck:
-      test: [ "CMD", "curl","http://localhost:8761" ]
+      test: [ "CMD", "curl", "http://localhost:8761" ]
     ports:
       - 8761:8761
     networks:
@@ -162,61 +161,69 @@ services:
     build: ../config-service
     container_name: miguel-config-service
     healthcheck:
-      test: [ "CMD", "curl", "http://config-service:9000/cloud-gateway/dev" ]
+      test: [ "CMD","curl","http://config-service:9000/cloud-gateway/dev" ]
     depends_on:
       eureka-server:
         condition: service_healthy
     environment:
       CUSTOM.SERVER.PORT: 9000
       EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
+      ZIPKIN.SERVER.HOSTNAME: http://172.20.0.1:9411/api/v2/spans
+    networks:
+      - miguel
+
+  cloud-gateway:
+    build: ../cloud-gateway
+    container_name: miguel-cloud-gateway
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    ports:
+      - 8080:8080
+    environment:
+      CUSTOM.SERVER.PORT: 8080
+      EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
+      ZIPKIN.SERVER.HOSTNAME: http://172.20.0.1:9411/api/v2/spans
     networks:
       - miguel
 
   audit-service:
     build: ../audit-service
     container_name: miguel-audit-service
-    healthcheck:
-      test: [ "CMD", "curl", "http://localhost:9040/" ]
     depends_on:
       eureka-server:
         condition: service_healthy
       config-service:
         condition: service_healthy
-      broker:
-        condition: service_started
     environment:
       CUSTOM.SERVER.PORT: 9040
       MONGODB.URL.CONNECTION: mongodb://miguel:miguel@mongo-audit:27019/miguel?authSource=admin
       EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
       EUREKA.CONFIG.SERVER: http://config-service:9000
+      ZIPKIN.SERVER.HOSTNAME: http://172.20.0.1:9411/api/v2/spans
     networks:
       - miguel
 
   client-service:
     build: ../client-service
     container_name: miguel-client-service
-    healthcheck:
-      test: [ "CMD", "curl", "http://localhost:9010/" ]
     depends_on:
       eureka-server:
         condition: service_healthy
       config-service:
         condition: service_healthy
-      broker:
-        condition: service_started
     environment:
       CUSTOM.SERVER.PORT: 9010
-      MONGODB.URL.CONNECTION: mongodb://miguel:miguel@mongo-audit:27017/miguel?authSource=admin
+      MONGODB.URL.CONNECTION: mongodb://miguel:miguel@mongo:27017/miguel?authSource=admin
       EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
       EUREKA.CONFIG.SERVER: http://config-service:9000
+      ZIPKIN.SERVER.HOSTNAME: http://172.20.0.1:9411/api/v2/spans
     networks:
       - miguel
 
   client-service-query:
     build: ../client-service-query
     container_name: miguel-client-service-query
-    healthcheck:
-      test: [ "CMD", "curl", "http://localhost:9015/" ]
     depends_on:
       eureka-server:
         condition: service_healthy
@@ -227,32 +234,32 @@ services:
       MONGODB.URL.CONNECTION: mongodb://miguel:miguel@mongo-query:27017/miguel?authSource=admin
       EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
       EUREKA.CONFIG.SERVER: http://config-service:9000
+      ZIPKIN.SERVER.HOSTNAME: http://172.20.0.1:9411/api/v2/spans
     networks:
       - miguel
 
   license-service:
     build: ../license-service
     container_name: miguel-license-service
-    healthcheck:
-      test: [ "CMD", "curl", "http://localhost:9030/" ]
     depends_on:
       eureka-server:
         condition: service_healthy
       config-service:
         condition: service_healthy
+    ports:
+      - 9030:9030
     environment:
       CUSTOM.SERVER.PORT: 9030
-      MONGODB.URL.CONNECTION: mongodb://miguel:miguel@mongo-audit:27017/miguel?authSource=admin
+      MONGODB.URL.CONNECTION: mongodb://miguel:miguel@mongo:27017/miguel?authSource=admin
       EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
       EUREKA.CONFIG.SERVER: http://config-service:9000
+      ZIPKIN.SERVER.HOSTNAME: http://172.20.0.1:9411/api/v2/spans
     networks:
       - miguel
 
   license-service-query:
     build: ../license-service-query
     container_name: miguel-license-service-query
-    healthcheck:
-      test: [ "CMD", "curl", "http://localhost:9035/" ]
     depends_on:
       eureka-server:
         condition: service_healthy
@@ -263,32 +270,32 @@ services:
       MONGODB.URL.CONNECTION: mongodb://miguel:miguel@mongo-query:27017/miguel?authSource=admin
       EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
       EUREKA.CONFIG.SERVER: http://config-service:9000
+      ZIPKIN.SERVER.HOSTNAME: http://172.20.0.1:9411/api/v2/spans
     networks:
       - miguel
 
   user-service:
     build: ../user-service
     container_name: miguel-user-service
-    healthcheck:
-      test: [ "CMD", "curl", "http://localhost:9020/" ]
     depends_on:
       eureka-server:
         condition: service_healthy
       config-service:
         condition: service_healthy
+    ports:
+      - 9020:9020
     environment:
       CUSTOM.SERVER.PORT: 9020
-      MONGODB.URL.CONNECTION: mongodb://miguel:miguel@mongo-audit:27017/miguel?authSource=admin
+      MONGODB.URL.CONNECTION: mongodb://miguel:miguel@mongo:27017/miguel?authSource=admin
       EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
       EUREKA.CONFIG.SERVER: http://config-service:9000
+      ZIPKIN.SERVER.HOSTNAME: http://172.20.0.1:9411/api/v2/spans
     networks:
       - miguel
 
   user-service-query:
     build: ../user-service-query
     container_name: miguel-user-service-query
-    healthcheck:
-      test: [ "CMD", "curl", "http://localhost:9025/" ]
     depends_on:
       eureka-server:
         condition: service_healthy
@@ -299,6 +306,7 @@ services:
       MONGODB.URL.CONNECTION: mongodb://miguel:miguel@mongo-query:27017/miguel?authSource=admin
       EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
       EUREKA.CONFIG.SERVER: http://config-service:9000
+      ZIPKIN.SERVER.HOSTNAME: http://172.20.0.1:9411/api/v2/spans
     networks:
       - miguel
 

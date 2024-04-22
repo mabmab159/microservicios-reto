@@ -3,7 +3,7 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
     scrape_interval: 1s
     static_configs:
-      - targets: [ '192.168.18.6:9010' ]
+      - targets: [ '172.20.0.1:9010' ]
       - labels:
           application: 'Client Service Microservice'
 
@@ -11,7 +11,7 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
     scrape_interval: 1s
     static_configs:
-      - targets: [ '192.168.18.6:9020' ]
+      - targets: [ '172.20.0.1:9020' ]
       - labels:
           application: 'User Service Microservice'
 
@@ -19,7 +19,7 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
     scrape_interval: 1s
     static_configs:
-      - targets: [ '192.168.18.6:9030' ]
+      - targets: [ '172.20.0.1:9030' ]
       - labels:
           application: 'License Service Microservice'
 
@@ -27,6 +27,6 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
     scrape_interval: 1s
     static_configs:
-      - targets: [ '192.168.18.6:8080' ]
+      - targets: [ '172.20.0.1:8080' ]
       - labels:
           application: 'CloudGateway Service Microservice'
