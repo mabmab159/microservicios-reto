@@ -19,10 +19,15 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain configure(ServerHttpSecurity httpSecurity) {
         return httpSecurity.authorizeExchange(auth -> auth
-                        .pathMatchers(HttpMethod.GET, "/api/user-service/**").permitAll()
-                        .pathMatchers(HttpMethod.POST, "/api/user-service/**").hasAnyRole("ADMIN", "SUPERVISOR")
-                        .pathMatchers("/api/license-query/**").permitAll()
-                        .anyExchange().authenticated()
+                        .pathMatchers(HttpMethod.POST, "/api/client/**").hasRole("POST")
+                        .pathMatchers(HttpMethod.PATCH, "/api/client/**").hasAnyRole("PUT", "PATCH")
+                        .pathMatchers(HttpMethod.GET, "/api/client-query/**").hasRole("GET")
+                        .pathMatchers(HttpMethod.POST, "/api/license/**").hasRole("POST")
+                        .pathMatchers(HttpMethod.PATCH, "/api/license/**").hasAnyRole("PUT", "PATCH")
+                        .pathMatchers(HttpMethod.GET, "/api/license-query/**").hasRole("GET")
+                        .pathMatchers(HttpMethod.POST, "/api/user/**").hasRole("POST")
+                        .pathMatchers("/api/user-query/**").permitAll()
+                        .anyExchange().permitAll()
                 )
                 .addFilterAfter(authenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION)
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)

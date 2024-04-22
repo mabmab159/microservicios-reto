@@ -1,15 +1,11 @@
 package com.miguel.clientservice.Controller;
 
 import com.miguel.clientservice.Model.Client;
-import com.miguel.clientservice.Model.ValidateResponse;
 import com.miguel.clientservice.Service.ClientService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/client")

@@ -5,7 +5,6 @@ import com.miguel.licenseservice.Model.License;
 import com.miguel.licenseservice.Services.ClientService;
 import com.miguel.licenseservice.Services.LicenseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -14,7 +13,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
@@ -23,7 +21,6 @@ import java.util.function.Predicate;
 @RequiredArgsConstructor
 @EnableScheduling
 public class LicenseController {
-
     private final LicenseService licenseService;
     private final ClientService clientService;
 
@@ -46,7 +43,7 @@ public class LicenseController {
                 .subscribe();
     }
 
-    @PostMapping("/update")
+    @PatchMapping("/update")
     public Mono<ResponseEntity<License>> updateLicense(@RequestBody License license) {
         Client client = clientService.getClient(license.getClient().getDNI());
         if (client == null) {

@@ -17,9 +17,14 @@ public class UserServiceApplication implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
-        String[] roles = {"asd", "asd"};
-        User user = new User(null, "miguel", "miguel", new String[]{"GET", "POST", "PUT"});
-        userService.save(user).subscribe();
+    public void run(String... args) {
+        User user1 = new User(null, "admin", "admin", new String[]{"GET", "POST", "PUT", "PATCH"});
+        User user2 = new User(null, "get", "get", new String[]{"GET"});
+        User user3 = new User(null, "post", "post", new String[]{"POST"});
+        User user4 = new User(null, "edit", "edit", new String[]{"PUT", "PATCH"});
+        userService.save(user1).subscribe();
+        userService.save(user2).subscribe();
+        userService.save(user3).subscribe();
+        userService.save(user4).subscribe();
     }
 }
