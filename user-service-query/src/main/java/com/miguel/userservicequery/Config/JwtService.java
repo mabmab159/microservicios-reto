@@ -1,6 +1,6 @@
 package com.miguel.userservicequery.Config;
 
-import com.miguel.userservicequery.Model.User;
+import com.miguel.userservicequery.Model.UserEntity;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +20,7 @@ public class JwtService {
     private String mitocodeKey;
 
     public String generateToken(UserDetails userDetails) {
-        User userEntity = (User) userDetails;
+        UserEntity userEntity = (UserEntity) userDetails;
         Map<String, Object> customClaims = new HashMap<>();
         customClaims.put("username", userEntity.getUsername());
         customClaims.put("password", userEntity.getPassword());

@@ -183,7 +183,7 @@ services:
     environment:
       CUSTOM.SERVER.PORT: 8080
       EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
-      ZIPKIN.SERVER.HOSTNAME: http://172.20.0.1:9411/api/v2/spans
+      ZIPKIN.SERVER.HOSTNAME: http://zipkin:9411/api/v2/spans
     networks:
       - miguel
 
@@ -200,7 +200,7 @@ services:
       MONGODB.URL.CONNECTION: mongodb://miguel:miguel@mongo-audit:27019/miguel?authSource=admin
       EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
       EUREKA.CONFIG.SERVER: http://config-service:9000
-      ZIPKIN.SERVER.HOSTNAME: http://172.20.0.1:9411/api/v2/spans
+      ZIPKIN.SERVER.HOSTNAME: http://zipkin:9411/api/v2/spans
     networks:
       - miguel
 
@@ -217,7 +217,7 @@ services:
       MONGODB.URL.CONNECTION: mongodb://miguel:miguel@mongo:27017/miguel?authSource=admin
       EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
       EUREKA.CONFIG.SERVER: http://config-service:9000
-      ZIPKIN.SERVER.HOSTNAME: http://172.20.0.1:9411/api/v2/spans
+      ZIPKIN.SERVER.HOSTNAME: http://zipkin:9411/api/v2/spans
     networks:
       - miguel
 
@@ -234,7 +234,7 @@ services:
       MONGODB.URL.CONNECTION: mongodb://miguel:miguel@mongo-query:27017/miguel?authSource=admin
       EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
       EUREKA.CONFIG.SERVER: http://config-service:9000
-      ZIPKIN.SERVER.HOSTNAME: http://172.20.0.1:9411/api/v2/spans
+      ZIPKIN.SERVER.HOSTNAME: http://zipkin:9411/api/v2/spans
     networks:
       - miguel
 
@@ -253,7 +253,7 @@ services:
       MONGODB.URL.CONNECTION: mongodb://miguel:miguel@mongo:27017/miguel?authSource=admin
       EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
       EUREKA.CONFIG.SERVER: http://config-service:9000
-      ZIPKIN.SERVER.HOSTNAME: http://172.20.0.1:9411/api/v2/spans
+      ZIPKIN.SERVER.HOSTNAME: http://zipkin:9411/api/v2/spans
     networks:
       - miguel
 
@@ -270,7 +270,7 @@ services:
       MONGODB.URL.CONNECTION: mongodb://miguel:miguel@mongo-query:27017/miguel?authSource=admin
       EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
       EUREKA.CONFIG.SERVER: http://config-service:9000
-      ZIPKIN.SERVER.HOSTNAME: http://172.20.0.1:9411/api/v2/spans
+      ZIPKIN.SERVER.HOSTNAME: http://zipkin:9411/api/v2/spans
     networks:
       - miguel
 
@@ -289,7 +289,7 @@ services:
       MONGODB.URL.CONNECTION: mongodb://miguel:miguel@mongo:27017/miguel?authSource=admin
       EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
       EUREKA.CONFIG.SERVER: http://config-service:9000
-      ZIPKIN.SERVER.HOSTNAME: http://172.20.0.1:9411/api/v2/spans
+      ZIPKIN.SERVER.HOSTNAME: http://zipkin:9411/api/v2/spans
     networks:
       - miguel
 
@@ -306,7 +306,7 @@ services:
       MONGODB.URL.CONNECTION: mongodb://miguel:miguel@mongo-query:27017/miguel?authSource=admin
       EUREKA.SERVER.HOSTNAME: http://eureka-server:8761/eureka
       EUREKA.CONFIG.SERVER: http://config-service:9000
-      ZIPKIN.SERVER.HOSTNAME: http://172.20.0.1:9411/api/v2/spans
+      ZIPKIN.SERVER.HOSTNAME: http://zipkin:9411/api/v2/spans
     networks:
       - miguel
 
