@@ -1,7 +1,6 @@
 package com.miguel.licenseservice.Feign;
 
 import com.miguel.licenseservice.Model.AuthRequest;
-import com.miguel.licenseservice.Model.ValidateResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

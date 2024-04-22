@@ -11,5 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 public class ValidateResponse {
     private Boolean success;
-    private List<String> roles;
+    private List String[] roles;
 }
