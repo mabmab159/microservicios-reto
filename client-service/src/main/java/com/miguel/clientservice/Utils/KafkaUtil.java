@@ -10,11 +10,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class KafkaUtil {
     private final KafkaTemplate<String, Client> kafkaTemplate;
-    @Value("${kafka.miguel.topic}")
+    @Value("${kafka.miguel.topic-client}")
     private String topicName;
 
     public void sendMessage(Client obj) {
-        System.out.println("llegamos al envio");
         kafkaTemplate.send(topicName, obj);
     }
 }

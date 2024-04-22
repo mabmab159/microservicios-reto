@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
 public class KafkaUtil {
     private final KafkaTemplate<String, License> kafkaTemplate;
     private final KafkaTemplate<String, Audit> kafkaTemplateAudit;
-    @Value("${kafka.miguel.topic}")
+    @Value("${kafka.miguel.topic-license}")
     private String topicName;
 
-    @Value("${kafka.miguel.topic2}")
+    @Value("${kafka.miguel.topic-audit}")
     private String topicName2;
 
     public void sendMessage(License obj) {

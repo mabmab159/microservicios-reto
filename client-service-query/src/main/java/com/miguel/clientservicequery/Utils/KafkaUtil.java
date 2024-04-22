@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class KafkaUtil {
     private final KafkaTemplate<String, Audit> kafkaTemplate;
 
-    @Value("${kafka.miguel.topic2}")
+    @Value("${kafka.miguel.topic-audit}")
     private String topicName2;
 
     public void sendMessage(Audit obj) {

@@ -30,9 +30,12 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
                     return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
                 })
                 .map(claims -> {
-                    String username = claims.get("sub", String.class);
+                    String username = claims.get("username", String.class);
+                    System.out.println("username: "+username);
                     List<String> roles = claims.get("authorities", List.class);
-                    Collection<GrantedAuthority> grantedAuthorities = roles.stream().map(SimpleGrantedAuthority::new)
+                    roles.stream().forEach(System.out::println);
+                    Collection<GrantedAuthority> grantedAuthorities = roles.stream()
+                            .map(SimpleGrantedAuthority::new)
                             .collect(Collectors.toList());
                     return new UsernamePasswordAuthenticationToken(username, null, grantedAuthorities);
                 });

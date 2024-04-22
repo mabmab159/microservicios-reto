@@ -28,7 +28,7 @@ public class AuthenticationService {
         if (userEntity == null) {
             throw new UsernameNotFoundException("Usuario no registrado en BD");
         }
-        kafkaUtil.sendMessage(new Audit(null, "User | auth: " + request.username(), new Date()));
+        kafkaUtil.sendMessage(new Audit(null, "User | auth: " + userEntity.getUsername(), new Date()));
         return jwtService.generateToken(userEntity);
     }
 }

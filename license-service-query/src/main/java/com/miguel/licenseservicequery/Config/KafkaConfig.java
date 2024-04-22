@@ -28,7 +28,7 @@ public class KafkaConfig {
     private String kafkaServer;
     @Value("${kafka.miguel.port}")
     private String kafkaPort;
-    @Value("${kafka.miguel.topic}")
+    @Value("${kafka.miguel.topic-license}")
     private String topicName;
 
     @Bean
@@ -54,7 +54,7 @@ public class KafkaConfig {
         return factory;
     }
 
-    @KafkaListener(topics = "miguel-topic")
+    @KafkaListener(topics = "miguel-topic-license")
     public void listenTopic(License obj) {
         licenseRepository.save(obj).subscribe();
     }

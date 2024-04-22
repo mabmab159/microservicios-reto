@@ -25,7 +25,7 @@ public class KafkaConfig {
     private String kafkaServer;
     @Value("${kafka.miguel.port}")
     private String kafkaPort;
-    @Value("${kafka.miguel.topic2}")
+    @Value("${kafka.miguel.topic-audit}")
     private String topicName;
 
     @Bean
@@ -51,7 +51,7 @@ public class KafkaConfig {
         return factory;
     }
 
-    @KafkaListener(topics = "miguel-topic-2")
+    @KafkaListener(topics = "miguel-topic-audit")
     public void listenTopic(Audit obj) {
         auditRepository.save(obj).subscribe();
     }

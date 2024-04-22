@@ -1,19 +1,21 @@
 package com.miguel.userservicequery.Config;
 
 
+import com.miguel.userservicequery.Model.Audit;
 import com.miguel.userservicequery.Model.User;
 import com.miguel.userservicequery.Repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
-import org.springframework.kafka.core.ConsumerFactory;
-import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.core.*;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +29,7 @@ public class KafkaConfig {
     private String kafkaServer;
     @Value("${kafka.miguel.port}")
     private String kafkaPort;
-    @Value("${kafka.miguel.topic}")
+    @Value("${kafka.miguel.topic-user}")
     private String topicName;
 
     @Bean
@@ -53,8 +55,21 @@ public class KafkaConfig {
         return factory;
     }
 
-    @KafkaListener(topics = "miguel-topic")
+    @KafkaListener(topics = "miguel-topic-user")
     public void listenTopic(User obj) {
         userRepository.save(obj);
+    }
+
+    public ProducerFactory<String, Audit> producerFactory() {
+        Map<String, Object> kafkaProperties = new HashMap<>();
+        kafkaProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaServer + ":" + kafkaPort);
+        kafkaProperties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        kafkaProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        return new DefaultKafkaProducerFactory<>(kafkaProperties);
+    }
+
+    @Bean
+    public KafkaTemplate<String, Audit> kafkaTemplateAudit() {
+        return new KafkaTemplate<>(producerFactory());
     }
 }

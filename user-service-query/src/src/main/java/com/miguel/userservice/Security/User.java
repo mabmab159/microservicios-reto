@@ -18,7 +18,7 @@ import java.util.List;
 public class User implements UserDetails {
     private String username;
     private String password;
-    private List String[] roles;
+    private String[] roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

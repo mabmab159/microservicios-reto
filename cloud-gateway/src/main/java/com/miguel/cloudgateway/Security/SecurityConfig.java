@@ -19,13 +19,13 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain configure(ServerHttpSecurity httpSecurity) {
         return httpSecurity.authorizeExchange(auth -> auth
-                        .pathMatchers(HttpMethod.POST, "/api/client/**").hasRole("POST")
+                        .pathMatchers(HttpMethod.POST, "/api/client/**").hasAnyRole("POST")
                         .pathMatchers(HttpMethod.PATCH, "/api/client/**").hasAnyRole("PUT", "PATCH")
-                        .pathMatchers(HttpMethod.GET, "/api/client-query/**").hasRole("GET")
-                        .pathMatchers(HttpMethod.POST, "/api/license/**").hasRole("POST")
+                        .pathMatchers(HttpMethod.GET, "/api/client-query/**").hasAnyRole("GET")
+                        .pathMatchers(HttpMethod.POST, "/api/license/**").hasAnyRole("POST")
                         .pathMatchers(HttpMethod.PATCH, "/api/license/**").hasAnyRole("PUT", "PATCH")
-                        .pathMatchers(HttpMethod.GET, "/api/license-query/**").hasRole("GET")
-                        .pathMatchers(HttpMethod.POST, "/api/user/**").hasRole("POST")
+                        .pathMatchers(HttpMethod.GET, "/api/license-query/**").hasAnyRole("GET")
+                        .pathMatchers(HttpMethod.POST, "/api/user/**").hasAnyRole("POST")
                         .pathMatchers("/api/user-query/**").permitAll()
                         .anyExchange().permitAll()
                 )

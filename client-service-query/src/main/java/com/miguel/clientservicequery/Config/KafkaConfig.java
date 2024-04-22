@@ -28,7 +28,7 @@ public class KafkaConfig {
     private String kafkaServer;
     @Value("${kafka.miguel.port}")
     private String kafkaPort;
-    @Value("${kafka.miguel.topic}")
+    @Value("${kafka.miguel.topic-client}")
     private String topicName;
 
     @Bean
@@ -54,9 +54,8 @@ public class KafkaConfig {
         return factory;
     }
 
-    @KafkaListener(topics = "miguel-topic")
+    @KafkaListener(topics = "miguel-topic-client")
     public void listenTopic(Client obj) {
-        System.out.println("Miguel - topic - kafka client service");
         clientRepository.save(obj).subscribe();
     }
 
