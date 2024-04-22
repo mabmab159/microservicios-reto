@@ -40,7 +40,6 @@ public class LicenseController {
         ValidateResponse validateResponse = userFeignService.validateToken(token);
         List<String> roles = validateResponse.getRoles();
         if (roles.contains("GET") && validateResponse.getSuccess()) {
-
             Flux<License> licenses = licenseService.findAll();
             if (!tipo.isEmpty()) {
                 licenses = licenses.filter(p -> p.getCategoria().name().equals(tipo));

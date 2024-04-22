@@ -55,6 +55,6 @@ public class KafkaConfig {
 
     @KafkaListener(topics = "miguel-topic")
     public void listenTopic(User obj) {
-        userRepository.save(obj).subscribe();
+        userRepository.save(obj);
     }
 }

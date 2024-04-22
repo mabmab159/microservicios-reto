@@ -6,3 +6,5 @@ spring:
       uri: ${EUREKA.CONFIG.SERVER:http://localhost:9000}
       profile: dev
       enabled: true
+  main:
+    allow-bean-definition-overriding: true

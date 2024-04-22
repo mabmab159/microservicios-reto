@@ -1,6 +1,5 @@
 package com.miguel.userservice.Config;
 
-
 import com.miguel.userservice.Model.User;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerConfig;

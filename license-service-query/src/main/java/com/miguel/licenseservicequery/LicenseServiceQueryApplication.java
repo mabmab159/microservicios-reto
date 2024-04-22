@@ -2,10 +2,14 @@ package com.miguel.licenseservicequery;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
+@EnableFeignClients
 public class LicenseServiceQueryApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(LicenseServiceQueryApplication.class, args);
-    }
+
+	public static void main(String[] args) {
+		SpringApplication.run(LicenseServiceQueryApplication.class, args);
+	}
+
 }

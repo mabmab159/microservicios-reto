@@ -1,5 +1,4 @@
 package com.miguel.licenseservicequery.Config;
-
 import feign.Capability;
 import feign.micrometer.MicrometerCapability;
 import io.micrometer.core.instrument.MeterRegistry;
