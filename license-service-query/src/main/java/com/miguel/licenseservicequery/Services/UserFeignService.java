@@ -6,12 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserFeignService {
-    public UserQueryFeign userQueryFeign;
-
-    public UserFeignService(UserQueryFeign userQueryFeign) {
-        this.userQueryFeign = userQueryFeign;
-    }
+    private final UserQueryFeign userQueryFeign;
 
     public ValidateResponse validateToken(String token) {
         return userQueryFeign.validateToken(token);
