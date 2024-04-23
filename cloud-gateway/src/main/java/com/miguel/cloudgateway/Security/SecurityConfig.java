@@ -19,13 +19,13 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain configure(ServerHttpSecurity httpSecurity) {
         return httpSecurity.authorizeExchange(auth -> auth
-                        .pathMatchers(HttpMethod.POST, "/api/client/**").hasAnyRole("POST")
-                        .pathMatchers(HttpMethod.PATCH, "/api/client/**").hasAnyRole("PUT", "PATCH")
-                        .pathMatchers(HttpMethod.GET, "/api/client-query/**").hasAnyRole("GET")
-                        .pathMatchers(HttpMethod.POST, "/api/license/**").hasAnyRole("POST")
-                        .pathMatchers(HttpMethod.PATCH, "/api/license/**").hasAnyRole("PUT", "PATCH")
-                        .pathMatchers(HttpMethod.GET, "/api/license-query/**").hasAnyRole("GET")
-                        .pathMatchers(HttpMethod.POST, "/api/user/**").hasAnyRole("POST")
+                        .pathMatchers(HttpMethod.POST, "/api/client/**").hasAnyAuthority("POST")
+                        .pathMatchers(HttpMethod.PATCH, "/api/client/**").hasAnyAuthority("PUT", "PATCH")
+                        .pathMatchers(HttpMethod.GET, "/api/client-query/**").hasAnyAuthority("GET")
+                        .pathMatchers(HttpMethod.POST, "/api/license/**").hasAnyAuthority("POST")
+                        .pathMatchers(HttpMethod.PATCH, "/api/license/**").hasAnyAuthority("PUT", "PATCH")
+                        .pathMatchers(HttpMethod.GET, "/api/license-query/**").hasAnyAuthority("GET")
+                        .pathMatchers(HttpMethod.POST, "/api/user/**").hasAnyAuthority("POST")
                         .pathMatchers("/api/user-query/**").permitAll()
                         .anyExchange().permitAll()
                 )

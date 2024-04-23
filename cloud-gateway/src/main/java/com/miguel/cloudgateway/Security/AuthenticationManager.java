@@ -15,6 +15,7 @@ import javax.crypto.SecretKey;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Configuration
@@ -31,11 +32,9 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
                 })
                 .map(claims -> {
                     String username = claims.get("username", String.class);
-                    System.out.println("username: "+username);
-                    List<String> roles = claims.get("authorities", List.class);
-                    roles.stream().forEach(System.out::println);
+                    List<Map<String, String>> roles = claims.get("authorities", List.class);
                     Collection<GrantedAuthority> grantedAuthorities = roles.stream()
-                            .map(SimpleGrantedAuthority::new)
+                            .map(p -> new SimpleGrantedAuthority(p.get("authority")))
                             .collect(Collectors.toList());
                     return new UsernamePasswordAuthenticationToken(username, null, grantedAuthorities);
                 });
